@@ -35,17 +35,6 @@ export const createDog = async (req: MyRequest, res: MyResponse) => {
     const { name, color, tail_length, weight } = req.body;
 
     // Create the dog
-    try {
-        const dog = await Dogs.create({ name, color, tail_length, weight });
-        res.status(201).json(dog);
-    } catch (error) {
-        if ((error as Error).name === "SequelizeUniqueConstraintError") {
-            res.status(400).json({
-                error: "Dog with the same name already exists",
-            });
-        } else {
-            //propagate to handler
-            throw error;
-        }
-    }
+    const dog = await Dogs.create({ name, color, tail_length, weight });
+    res.status(201).json(dog);
 };

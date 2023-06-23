@@ -1,5 +1,6 @@
 import * as http from "node:http";
 import { MyError } from "./system";
+import { ValidationError, ValidationErrorItemType } from "sequelize";
 
 // default error handler
 const handleErrors = (
@@ -9,8 +10,17 @@ const handleErrors = (
 ) => {
     console.log(err);
     const error = err as MyError;
-    const errMessage = error.message || "Internal Server Error";
-    const statusCode = error.statusCode || 500;
+    let errMessage = error.message || "Internal Server Error";
+    let statusCode = error.statusCode || 500;
+
+    if (
+        error instanceof ValidationError &&
+        error.name === "SequelizeUniqueConstraintError"
+    ) {
+        const errorField = error.errors[0].value;
+        errMessage = `Duplicate value: ${errorField}`;
+        statusCode = 400;
+    }
     res.writeHead(statusCode, { "Content-Type": "application/json" });
     res.end(JSON.stringify({ message: errMessage }));
 };
