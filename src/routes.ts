@@ -1,4 +1,4 @@
-import { createDog, getAllDogs } from "./controllers/dogController";
+import { createDog, getAllDogs } from "./controllers/dogs";
 import { ping } from "./controllers/ping";
 import { Routes } from "./system";
 

@@ -1,6 +1,6 @@
 import * as http from "node:http";
 import { MyError } from "./system";
-import { ValidationError, ValidationErrorItemType } from "sequelize";
+import { ValidationError } from "sequelize";
 
 // default error handler
 const handleErrors = (
