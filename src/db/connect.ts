@@ -1,11 +1,13 @@
 import "dotenv/config";
 import { Sequelize } from "sequelize";
 
-let sequelize: Sequelize | null = null;
-
-function getSequelizeInstance(): Sequelize {
-    if (!sequelize) {
-        sequelize = new Sequelize({
+class Database {
+    private static instance: Sequelize | undefined;
+    static getInstance() {
+        if (Database.instance) {
+            return Database.instance;
+        }
+        Database.instance = new Sequelize({
             dialect: "mssql",
             database: process.env.DB_NAME,
             username: process.env.DB_USERNAME,
@@ -13,11 +15,10 @@ function getSequelizeInstance(): Sequelize {
             host: process.env.DB_HOST,
             port: +process.env.DB_NAME!,
         });
+        return Database.instance;
     }
-
-    return sequelize;
 }
 
-const db = getSequelizeInstance();
+const db = Database.getInstance();
 
 export { db };
