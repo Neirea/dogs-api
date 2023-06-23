@@ -9,18 +9,6 @@ export const getAllDogs = async (req: MyRequest, res: MyResponse) => {
     // items per page
     const pageSize = +req.query.pageSize || limit;
 
-    if (limit && limit < 0) {
-        res.status(400).json({ message: "Limit can't be negative" });
-        return;
-    }
-
-    // check for valid attribute
-    const attrs = Object.keys(Dogs.getAttributes());
-    if (attribute && !attrs.includes(attribute)) {
-        res.status(400).json({ message: "Wrong attribute name" });
-        return;
-    }
-
     // order type
     if (order && !["asc", "desc"].includes(order.toLowerCase())) {
         res.status(400).json({ message: "Invalid order type" });
@@ -45,28 +33,6 @@ export const getAllDogs = async (req: MyRequest, res: MyResponse) => {
 
 export const createDog = async (req: MyRequest, res: MyResponse) => {
     const { name, color, tail_length, weight } = req.body;
-
-    // Validate name
-    if (!name || name.length < 2) {
-        res.status(400).json({ message: "Invalid name" });
-        return;
-    }
-    // Validate color - Can add color validation if we know all existing colors
-    if (!color) {
-        res.status(400).json({ message: "Color is missing" });
-        return;
-    }
-
-    // Validate tail_length
-    if (typeof tail_length !== "number" || tail_length < 0) {
-        res.status(400).json({ message: "Invalid tail_length" });
-        return;
-    }
-    // Validate weight
-    if (typeof weight !== "number" || weight < 0) {
-        res.status(400).json({ message: "Invalid weight" });
-        return;
-    }
 
     // Create the dog
     try {
