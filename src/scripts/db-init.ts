@@ -1,4 +1,4 @@
-import db from "./connect";
+import db from "../db/connect";
 import { Dogs } from "../models/dogs";
 
 // Data to insert

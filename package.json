@@ -6,7 +6,7 @@
     "scripts": {
         "start": "./build/index.js",
         "build": "tsc -p .",
-        "db-init": "tsnd ./src/db/init.ts",
+        "db-init": "tsnd ./src/scripts/db-init.ts",
         "dev": "tsnd --respawn ./src/index.ts"
     },
     "keywords": [],
