@@ -24,34 +24,18 @@ export interface Routes {
     };
 }
 
-const getBody = (req: http.IncomingMessage): Promise<string> => {
-    return new Promise((resolve, reject) => {
-        let bodyChunks: Buffer[] = [];
-
-        req.on("data", (chunk: Buffer) => {
-            bodyChunks.push(chunk);
-        });
-
-        req.on("end", () => {
-            const body = Buffer.concat(bodyChunks).toString();
-            resolve(body);
-        });
-
-        req.on("error", (error: Error) => {
-            reject(error);
-        });
-    });
-};
-
 // our app only expects json body
-const parseJsonBody = (req: MyRequest, res: MyResponse, body: string) => {
+const getParsedBody = async (req: http.IncomingMessage):Promise<Object> => {
+    const chunks: Buffer[] = [];
+    for await (const chunk of req) {
+        chunks.push(chunk);
+    }
+    const body = Buffer.concat(chunks).toString();
+
     if (!body) return {};
     let parsedBody;
-
     // ideally would check for Content-Type here
     // but we'll accept any if it's JSON parseable
-
-    // parsing JSON body
     try {
         parsedBody = JSON.parse(body.toString());
     } catch (error) {
@@ -124,11 +108,8 @@ const addData = async (req: http.IncomingMessage, res: http.ServerResponse) => {
     const url = request.url || "/";
     const queryParamString = url!.split("?")[1];
 
-    const query = parseQueryParams(queryParamString);
-    const rawBody = await getBody(request);
-    const body = parseJsonBody(request, response, rawBody);
-    request.body = body;
-    request.query = query;
+    request.body = await getParsedBody(request);
+    request.query = parseQueryParams(queryParamString);
 
     return { req: request, res: response };
 };
