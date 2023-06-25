@@ -3,12 +3,14 @@ import { ping } from "./controllers/ping";
 import { Routes } from "./system";
 
 const routes: Routes = {
-    GET: {
-        "/ping": ping,
-        "/dogs": getAllDogs,
+    "/ping": {
+        GET: ping,
     },
-    POST: {
-        "/dog": createDog,
+    "/dogs": {
+        GET: getAllDogs,
+    },
+    "/dog": {
+        POST: createDog,
     },
 };
 export default routes;

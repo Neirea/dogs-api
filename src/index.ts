@@ -20,8 +20,8 @@ server.listen(PORT, async () => {
         await db.authenticate();
         console.log(`server is running on port ${PORT}...`);
     } catch (error) {
-        console.log("Connection to db failed...");
-        console.log(error);
+        console.error("Connection to db failed...");
+        console.error(error);
         process.exit(1);
     }
 });

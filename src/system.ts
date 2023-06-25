@@ -69,7 +69,7 @@ const handleRoutes = async (
     const url = req.url || "/";
     const routeUrl = url!.split("?")[0];
 
-    const reqController = routes[method][routeUrl];
+    const reqController = routes[routeUrl][method];
 
     if (!reqController) {
         res.status(404).end();

@@ -8,7 +8,7 @@ const handleErrors = (
     req: http.IncomingMessage,
     res: http.ServerResponse
 ) => {
-    console.log(err);
+    console.error(err);
     const error = err as MyError;
     let errMessage = error.message || "Internal Server Error";
     let statusCode = error.statusCode || 500;
