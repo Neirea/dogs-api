@@ -115,7 +115,7 @@ const addData = async (req: http.IncomingMessage, res: http.ServerResponse) => {
 };
 
 // errors are propagated to user
-export const handleRequest = async (
+export default async (
     request: http.IncomingMessage,
     response: http.ServerResponse,
     routes: Routes

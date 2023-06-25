@@ -1,6 +1,6 @@
 import * as http from "node:http";
-import { handleRequest } from "./system";
-import { db } from "./db/connect";
+import handleRequest from "./system";
+import db from "./db/connect";
 import routes from "./routes";
 import handleErrors from "./errors";
 

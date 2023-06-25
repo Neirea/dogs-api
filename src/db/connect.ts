@@ -21,4 +21,4 @@ class Database {
 
 const db = Database.getInstance();
 
-export { db };
+export default db;
